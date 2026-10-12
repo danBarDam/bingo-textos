@@ -1,17 +1,17 @@
-# Bingo de Imagens
+# Bingo de Palavras
 
-Jogo de bingo com imagens em React (Vite), para jogar em vários computadores ao mesmo tempo: uma tela de **Sorteio** (com senha) e quantas **Cartelas** quiser.
+Jogo de bingo com palavras em React (Vite), para jogar em vários computadores ao mesmo tempo: uma tela de **Sorteio** (com senha) e quantas **Cartelas** quiser.
 
 ## Como funciona
 
 | Endereço | Quem usa | O que faz |
 |---|---|---|
-| `/` | Jogadores (aberto a todos) | Digita o nome → recebe uma cartela 4x4 e marca as imagens |
-| `/sorteio` | Quem conduz o jogo (pede senha) | Sorteia as imagens, vê quantos jogadores entraram e quem ganhou |
+| `/` | Jogadores (aberto a todos) | Digita o nome → recebe uma cartela 4x4 e marca as palavras |
+| `/sorteio` | Quem conduz o jogo (pede senha) | Sorteia as palavras, vê quantos jogadores entraram e quem ganhou |
 
-- Ganha quem completar uma **linha, coluna ou diagonal** com imagens já sorteadas. O sistema detecta sozinho e o nome aparece na tela do sorteio.
-- Marcar uma imagem **antes** de ela ser sorteada não vale (fica vermelha). É preciso desmarcar e marcar de novo depois que ela sair.
-- Se mais de uma pessoa completar na **mesma imagem sorteada**, é empate: aparece o botão **Desempate**, que dá um número de 1 a 10 para cada empatado. O maior vence; se empatar de novo, repete só entre eles.
+- Ganha quem completar uma **linha, coluna ou diagonal** com palavras já sorteadas. O sistema detecta sozinho e o nome aparece na tela do sorteio.
+- Marcar uma palavra **antes** de ela ser sorteada não vale (fica vermelha). É preciso desmarcar e marcar de novo depois que ela sair.
+- Se mais de uma pessoa completar na **mesma palavra sorteada**, é empate: aparece o botão **Desempate**, que dá um número de 1 a 10 para cada empatado. O maior vence; se empatar de novo, repete só entre eles.
 - **Nova partida** apaga os jogadores e os ganhadores. Quem estiver com a cartela aberta volta para a tela de nome (com o nome já preenchido) para pegar uma cartela nova.
 
 ## Rodar no computador
@@ -40,19 +40,20 @@ Divulgue `https://seu-projeto.vercel.app` para os jogadores e use `https://seu-p
 
 | Arquivo | O que tem |
 |---|---|
-| `src/dados.js` | Lista de pares de imagens (sorteio → cartela), tamanho da cartela, quantas sorteadas aparecem na faixa |
+| `src/dados.js` | Lista de pares de palavras (sorteio → cartela), tamanho da cartela, quantas sorteadas aparecem na faixa |
 | `src/AppSorteio.jsx` / `src/AppJogador.jsx` | Senha do sorteio / nome do jogador e comunicação com o servidor |
 | `src/components/TelaSorteio.jsx` | Tela do sorteio, anúncio do vencedor e desempate |
 | `src/components/TelaCartela.jsx` | Tela da cartela (faixa de sorteadas + grade + placar) |
 | `src/utils.js` | Embaralhar, gerar cartela, verificar bingo (usado também pelo servidor) |
 | `api/` | Servidor: `estado`, `sorteio` (com senha), `jogador`; regras em `api/_lib/jogo.js` |
 | `src/styles.css` | Cores, fontes e layout |
-| `public/imagens/` | Coloque aqui suas imagens |
 
-## Trocando as imagens
+## Trocando as palavras
 
-Coloque os arquivos em `public/imagens/` e, em `src/dados.js`, troque o emoji pelo caminho:
+Em `src/dados.js`, edite a lista. Cada linha é um par: a primeira palavra sai no sorteio, a segunda está na cartela.
 
 ```js
-{ id: 1, sorteio: { img: "/imagens/vaca.png" }, cartela: { img: "/imagens/leite.png" }, nome: "Vaca → Leite" },
+["Vaca", "Leite"],
 ```
+
+São precisos pelo menos 16 pares (o tamanho da cartela). O tamanho da letra se ajusta sozinho, mas textos curtos ficam melhores.

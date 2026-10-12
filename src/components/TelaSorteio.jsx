@@ -1,4 +1,4 @@
-import Imagem from "./Imagem.jsx";
+import Texto from "./Texto.jsx";
 import { PARES } from "../dados.js";
 import { parPorId } from "../utils.js";
 
@@ -17,7 +17,7 @@ export default function TelaSorteio({ estado, ocupado, sortear, desempatar, pedi
         <div className="globo">
           <div key={sorteadas.length} className={"destaque " + (atual ? "gira" : "vazio")}>
             <div className="miolo">
-              {atual ? <Imagem fonte={atual.sorteio} alt={atual.nome} /> : "Clique em Sortear para começar"}
+              {atual ? <Texto>{atual.sorteio}</Texto> : "Clique em Sortear para começar"}
             </div>
           </div>
           <div className="contador">
@@ -25,7 +25,7 @@ export default function TelaSorteio({ estado, ocupado, sortear, desempatar, pedi
           </div>
           <div className="acoes">
             <button className="btn primario" onClick={sortear} disabled={acabou || ocupado}>
-              {acabou ? "Todas sorteadas" : "Sortear imagem"}
+              {acabou ? "Todas sorteadas" : "Sortear palavra"}
             </button>
             <button className={"btn" + (confirmando ? " confirmar" : "")} onClick={pedirNovaPartida} disabled={ocupado}>
               {confirmando ? "Confirmar nova partida" : "Nova partida"}
@@ -45,7 +45,7 @@ export default function TelaSorteio({ estado, ocupado, sortear, desempatar, pedi
                   title={ordem >= 0 ? `${ordem + 1}ª sorteada` : "Ainda não saiu"}
                 >
                   {ordem >= 0 && <span className="num">{ordem + 1}</span>}
-                  <Imagem fonte={p.sorteio} alt={p.nome} />
+                  <Texto>{p.sorteio}</Texto>
                 </div>
               );
             })}
@@ -56,7 +56,7 @@ export default function TelaSorteio({ estado, ocupado, sortear, desempatar, pedi
   );
 }
 
-/* Anúncio de quem ganhou, com o desempate quando mais de um completou na mesma imagem */
+/* Anúncio de quem ganhou, com o desempate quando mais de um completou na mesma palavra */
 function Vencedores({ estado, ocupado, desempatar }) {
   const { ganhadores, empatados, desempate, candidatos, precisaDesempate, vencedor } = estado;
   if (!ganhadores.length) return null;
@@ -78,7 +78,7 @@ function Vencedores({ estado, ocupado, desempatar }) {
           <div className="anuncio-rot">Empate!</div>
           <div className="anuncio-nome pequeno">{candidatos.map((p) => porPub[p]?.nome).join(" × ")}</div>
           <div className="anuncio-sub">
-            {desempate.length ? "Empataram de novo no desempate." : "Completaram na mesma imagem."} Cada um recebe um
+            {desempate.length ? "Empataram de novo no desempate." : "Completaram na mesma palavra."} Cada um recebe um
             número de 1 a 10 e o maior vence.
           </div>
         </>
@@ -110,7 +110,7 @@ function Vencedores({ estado, ocupado, desempatar }) {
 
       {depois.length > 0 && (
         <div className="anuncio-depois">
-          Completaram depois: {depois.map((g) => `${g.nome} (${g.ganhouEm}ª imagem)`).join(", ")}
+          Completaram depois: {depois.map((g) => `${g.nome} (${g.ganhouEm}ª palavra)`).join(", ")}
         </div>
       )}
     </section>

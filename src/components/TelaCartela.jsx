@@ -1,4 +1,4 @@
-import Imagem from "./Imagem.jsx";
+import Texto from "./Texto.jsx";
 import { LETRAS, QTD_RECENTES } from "../dados.js";
 import { parPorId, faltamParaBingo } from "../utils.js";
 
@@ -23,16 +23,16 @@ export default function TelaCartela({ estado, eu, pendentes, alternar, trocarCar
           </span>
           {recentes.length === 0 && (
             <>
-              <div className="mini atual vazia" title="Nenhuma ainda"></div>
+              <span className="mini atual vazia" title="Nenhuma ainda"></span>
               <span className="esperando">Aguardando o primeiro sorteio…</span>
             </>
           )}
           {recentes.map((id, i) => {
             const p = parPorId(id);
             return (
-              <div key={id} className={"mini" + (i === 0 ? " atual" : "")} title={i === 0 ? "Imagem atual" : "Sorteada antes"}>
-                <Imagem fonte={p.sorteio} alt={p.nome} />
-              </div>
+              <span key={id} className={"mini" + (i === 0 ? " atual" : "")} title={i === 0 ? "Palavra atual" : "Sorteada antes"}>
+                {p.sorteio}
+              </span>
             );
           })}
         </div>
@@ -62,29 +62,28 @@ export default function TelaCartela({ estado, eu, pendentes, alternar, trocarCar
                     className={"casa" + (m ? " marcada " + (pendente ? "pendente" : certa ? "certa" : "errada") : "")}
                     onClick={() => alternar(id)}
                     aria-pressed={m}
-                    aria-label={p.nome}
-                  >
-                    <Imagem fonte={p.cartela} alt={p.nome} />
+                                      >
+                    <Texto>{p.cartela}</Texto>
                   </button>
                 );
               })}
             </div>
           </div>
           <p className="dica">
-            Olhe a imagem sorteada e clique na imagem da sua cartela que combina com ela. Clique de novo para desmarcar.
+            Leia a palavra sorteada e clique na palavra da sua cartela que combina com ela. Clique de novo para desmarcar.
             Faça uma linha, coluna ou diagonal!
           </p>
         </div>
 
         <div className="placar">
           {eu.ganhouEm !== null && <div className="bingo">BINGO!</div>}
-          <div className="linha"><span>Imagens sorteadas</span><span>{sorteadas.length}</span></div>
+          <div className="linha"><span>Palavras sorteadas</span><span>{sorteadas.length}</span></div>
           <div className="linha"><span>Acertos marcados</span><span>{certas.size}</span></div>
           <div className="linha"><span>Faltam para o bingo</span><span>{faltam}</span></div>
           {invalidas > 0 && (
             <div className="aviso">
               {invalidas === 1 ? "1 marcação em vermelho não vale" : `${invalidas} marcações em vermelho não valem`}: a
-              imagem ainda não tinha sido sorteada (ou não combina). Desmarque e marque de novo quando ela sair.
+              palavra ainda não tinha sido sorteada (ou não combina). Desmarque e marque de novo quando ela sair.
             </div>
           )}
           <button

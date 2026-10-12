@@ -4,7 +4,7 @@ import { useEstado } from "./useEstado.js";
 import Topo from "./components/Topo.jsx";
 import TelaSorteio from "./components/TelaSorteio.jsx";
 
-const CHAVE_SENHA = "bingo:senha";
+const CHAVE_SENHA = "bingo-textos:senha";
 
 export default function AppSorteio() {
   const [senha, setSenha] = useState(() => lerGuardado(sessionStorage, CHAVE_SENHA));

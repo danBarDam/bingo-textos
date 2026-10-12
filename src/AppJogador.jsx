@@ -4,8 +4,8 @@ import { useEstado } from "./useEstado.js";
 import Topo from "./components/Topo.jsx";
 import TelaCartela from "./components/TelaCartela.jsx";
 
-const CHAVE_SESSAO = "bingo:jogador"; // { id, nome }
-const CHAVE_NOME = "bingo:nome"; // último nome usado, para já vir preenchido
+const CHAVE_SESSAO = "bingo-textos:jogador"; // { id, nome }
+const CHAVE_NOME = "bingo-textos:nome"; // último nome usado, para já vir preenchido
 
 export default function AppJogador() {
   const [sessao, setSessao] = useState(() => lerGuardado(localStorage, CHAVE_SESSAO));

@@ -4,9 +4,9 @@ import { falha } from "./http.js";
 import { PARES } from "../../src/dados.js";
 import { embaralhar, novaCartela, temBingo } from "../../src/utils.js";
 
-const K_JOGO = "bingo:jogo"; // { partida, ordem, qtd, desempate: [rodada...] }
-const K_JOGADORES = "bingo:jogadores"; // id secreto -> jogador
-const K_GANHADORES = "bingo:ganhadores"; // pub -> { pub, nome, num, ganhouEm, em }
+const K_JOGO = "bingo-textos:jogo"; // { partida, ordem, qtd, desempate: [rodada...] }
+const K_JOGADORES = "bingo-textos:jogadores"; // id secreto -> jogador
+const K_GANHADORES = "bingo-textos:ganhadores"; // pub -> { pub, nome, num, ganhouEm, em }
 
 const idCurto = () => randomUUID().slice(0, 8);
 const numeroCartela = () => 1 + Math.floor(Math.random() * 999);
@@ -109,7 +109,7 @@ async function lerJogador(id) {
 export async function marcar(id, parId) {
   const [jogador, jogo] = await Promise.all([lerJogador(id), lerJogo()]);
   parId = Number(parId);
-  if (!jogador.cartela.includes(parId)) throw falha(400, "Essa imagem não está na sua cartela.");
+  if (!jogador.cartela.includes(parId)) throw falha(400, "Essa palavra não está na sua cartela.");
 
   if (parId in jogador.marcas) delete jogador.marcas[parId];
   else jogador.marcas[parId] = jogo.ordem.slice(0, jogo.qtd).includes(parId);
