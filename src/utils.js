@@ -13,8 +13,8 @@ export const novaCartela = () => embaralhar(PARES.map((p) => p.id)).slice(0, TAM
 
 export const parPorId = (id) => PARES.find((p) => p.id === id);
 
-/* Linhas, colunas e diagonais de uma grade 4x4 (posições 0..15) */
-const N = 4;
+/* Linhas, colunas e diagonais de uma grade 3x3 (posições 0..8) */
+const N = 3;
 const LINHAS = [
   ...[...Array(N)].map((_, r) => [...Array(N)].map((_, c) => r * N + c)),
   ...[...Array(N)].map((_, c) => [...Array(N)].map((_, r) => r * N + c)),

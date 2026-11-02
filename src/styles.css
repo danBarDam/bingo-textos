@@ -1,4 +1,4 @@
-/* Layout: topo; /sorteio (login → anúncio de vencedores + globo + painel); / (nome → faixa de sorteadas + grade 4x4) */
+/* Layout: topo; /sorteio (login → anúncio de vencedores + globo + painel); / (nome → faixa de sorteadas + grade 3x3) */
 :root {
   --bg: #eef2fb;
   --surface: #ffffff;
@@ -69,20 +69,18 @@ a.btn { text-decoration: none; display: inline-block; }
 /* SORTEIO */
 .sorteio { display: grid; grid-template-columns: minmax(0, 340px) minmax(0, 1fr); gap: 28px; align-items: start; }
 .globo { display: flex; flex-direction: column; align-items: center; gap: 16px; }
-.destaque { width: min(300px, 100%); aspect-ratio: 1; border-radius: 50%; background: var(--ball); border: 6px solid var(--ink); display: grid; place-items: center; overflow: hidden; position: relative; }
+.destaque { width: min(170px, 100%); aspect-ratio: 1; border-radius: 50%; background: var(--ball); border: 6px solid var(--ink); display: grid; place-items: center; overflow: hidden; position: relative; }
 .destaque .miolo { width: 72%; height: 72%; border-radius: 50%; background: var(--surface); overflow: hidden; display: grid; place-items: center; }
-.destaque.vazio .miolo { color: var(--muted); font-weight: 800; text-align: center; padding: 20px; font-size: 14px; }
+.destaque.vazio .miolo { color: var(--muted); font-weight: 800; text-align: center; padding: 6px; font-size: 11px; box-sizing: border-box; }
 .destaque.gira { animation: gira .6s ease-out; }
 @keyframes gira { 0% { transform: rotate(-200deg) scale(.6); } 100% { transform: none; } }
-.nome-atual { font-family: var(--f-display); font-size: 22px; text-align: center; text-wrap: balance; }
+.frase-atual { margin: 0; font-size: 22px; font-weight: 800; line-height: 1.25; text-align: center; text-wrap: balance; }
 .contador { color: var(--muted); font-weight: 700; font-variant-numeric: tabular-nums; }
 .painel h2, .cartela-area h2 { font-family: var(--f-display); font-size: 15px; letter-spacing: 1px; margin: 0 0 12px; font-weight: 400; }
-.grade-painel { display: grid; grid-template-columns: repeat(auto-fill, minmax(96px, 1fr)); gap: 8px; }
-.cel-painel { aspect-ratio: 3 / 2; border-radius: 12px; background: var(--dim); display: grid; place-items: center; position: relative; overflow: hidden; }
-.cel-painel .txt { color: var(--muted); opacity: .45; }
-.cel-painel.saiu { background: var(--surface); border: 2px solid var(--ink); }
-.cel-painel.saiu .txt { color: var(--ink); opacity: 1; }
-.cel-painel .num { position: absolute; top: 3px; left: 5px; font-size: 10px; font-weight: 800; color: var(--muted); font-variant-numeric: tabular-nums; }
+.lista-sorteadas { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; max-height: 620px; overflow-y: auto; }
+.lista-sorteadas li { display: flex; gap: 10px; align-items: baseline; background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 10px 12px; font-weight: 700; line-height: 1.3; }
+.lista-sorteadas li:first-child { border: 2px solid var(--ink); }
+.lista-sorteadas .num { flex: none; min-width: 22px; font-size: 12px; font-weight: 800; color: var(--muted); font-variant-numeric: tabular-nums; }
 
 /* ANÚNCIO DE VENCEDORES (tela do sorteio) */
 .anuncio { background: var(--ball); color: var(--ball-ink); border: 4px solid var(--ink); border-radius: 20px; padding: 18px; margin-bottom: 22px; display: grid; gap: 8px; justify-items: center; text-align: center; animation: entra .5s ease-out; }
@@ -106,18 +104,15 @@ a.btn { text-decoration: none; display: inline-block; }
 .resultado .meus-numeros { font-family: var(--f-body); font-size: 14px; font-weight: 700; }
 .esperando { color: var(--muted); font-weight: 700; align-self: center; }
 .faixa { background: var(--surface); border: 1px solid var(--line); border-radius: 16px; padding: 14px; display: flex; flex-wrap: wrap; gap: 14px; align-items: center; justify-content: space-between; margin-bottom: 18px; }
-.sorteadas { display: flex; gap: 10px; align-items: center; min-width: 0; flex-wrap: wrap; }
+.sorteadas { display: flex; flex-direction: column; gap: 8px; min-width: 0; width: 100%; }
 .sorteadas .rot { font-size: 11px; font-weight: 800; letter-spacing: 1px; text-transform: uppercase; color: var(--muted); width: 100%; }
-.mini { border-radius: 999px; background: var(--dim); padding: 7px 14px; font-weight: 800; font-size: 15px; opacity: .7; max-width: 100%; overflow-wrap: anywhere; }
-.mini.atual { opacity: 1; background: var(--ball); color: var(--ball-ink); border: 3px solid var(--ink); font-size: 22px; padding: 10px 20px; }
-.mini.vazia { width: 120px; height: 46px; box-sizing: border-box; border: 2px dashed var(--line); background: transparent; }
+.mini { border-radius: 12px; background: var(--dim); padding: 7px 14px; font-weight: 700; font-size: 14px; line-height: 1.3; opacity: .7; overflow-wrap: anywhere; }
+.mini.atual { opacity: 1; background: var(--ball); color: var(--ball-ink); border: 3px solid var(--ink); font-weight: 800; font-size: 20px; padding: 10px 16px; }
 
 .cartela-topo { display: flex; flex-wrap: wrap; gap: 10px; justify-content: space-between; align-items: baseline; margin-bottom: 10px; }
 .cartela-topo .num { color: var(--muted); font-weight: 700; font-variant-numeric: tabular-nums; }
 .cartela { background: var(--accent); border-radius: 20px; padding: 12px; max-width: 520px; }
-.cartela .letras { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-bottom: 8px; }
-.cartela .letras span { font-family: var(--f-display); color: var(--accent-ink); text-align: center; font-size: 22px; }
-.grade-cartela { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
+.grade-cartela { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
 .casa { aspect-ratio: 1; border: 0; border-radius: 12px; background: var(--surface); color: var(--ink); position: relative; overflow: hidden; padding: 0; display: grid; place-items: center; }
 .casa.marcada.certa::after, .casa.marcada.errada::after { content: ""; position: absolute; inset: 0; border-radius: 12px; border: 5px solid var(--ok); background: color-mix(in srgb, var(--ok) 22%, transparent); }
 .casa.marcada.pendente::after { content: ""; position: absolute; inset: 0; border-radius: 12px; border: 5px dashed var(--ball); }

@@ -1,5 +1,5 @@
 import Texto from "./Texto.jsx";
-import { LETRAS, QTD_RECENTES } from "../dados.js";
+import { QTD_RECENTES } from "../dados.js";
 import { parPorId, faltamParaBingo } from "../utils.js";
 
 export default function TelaCartela({ estado, eu, pendentes, alternar, trocarCartela }) {
@@ -21,16 +21,11 @@ export default function TelaCartela({ estado, eu, pendentes, alternar, trocarCar
           <span className="rot">
             Últimas sorteadas · {sorteadas.length} de {total}
           </span>
-          {recentes.length === 0 && (
-            <>
-              <span className="mini atual vazia" title="Nenhuma ainda"></span>
-              <span className="esperando">Aguardando o primeiro sorteio…</span>
-            </>
-          )}
+          {recentes.length === 0 && <span className="esperando">Aguardando o primeiro sorteio…</span>}
           {recentes.map((id, i) => {
             const p = parPorId(id);
             return (
-              <span key={id} className={"mini" + (i === 0 ? " atual" : "")} title={i === 0 ? "Palavra atual" : "Sorteada antes"}>
+              <span key={id} className={"mini" + (i === 0 ? " atual" : "")} title={i === 0 ? "Frase atual" : "Sorteada antes"}>
                 {p.sorteio}
               </span>
             );
@@ -45,11 +40,6 @@ export default function TelaCartela({ estado, eu, pendentes, alternar, trocarCar
             <span className="num">Cartela nº {String(eu.num).padStart(3, "0")}</span>
           </div>
           <div className="cartela">
-            <div className="letras">
-              {LETRAS.map((l) => (
-                <span key={l}>{l}</span>
-              ))}
-            </div>
             <div className="grade-cartela">
               {eu.cartela.map((id) => {
                 const p = parPorId(id);
@@ -70,20 +60,20 @@ export default function TelaCartela({ estado, eu, pendentes, alternar, trocarCar
             </div>
           </div>
           <p className="dica">
-            Leia a palavra sorteada e clique na palavra da sua cartela que combina com ela. Clique de novo para desmarcar.
+            Leia a frase sorteada e clique na palavra da sua cartela que combina com ela. Clique de novo para desmarcar.
             Faça uma linha, coluna ou diagonal!
           </p>
         </div>
 
         <div className="placar">
           {eu.ganhouEm !== null && <div className="bingo">BINGO!</div>}
-          <div className="linha"><span>Palavras sorteadas</span><span>{sorteadas.length}</span></div>
+          <div className="linha"><span>Frases sorteadas</span><span>{sorteadas.length}</span></div>
           <div className="linha"><span>Acertos marcados</span><span>{certas.size}</span></div>
           <div className="linha"><span>Faltam para o bingo</span><span>{faltam}</span></div>
           {invalidas > 0 && (
             <div className="aviso">
               {invalidas === 1 ? "1 marcação em vermelho não vale" : `${invalidas} marcações em vermelho não valem`}: a
-              palavra ainda não tinha sido sorteada (ou não combina). Desmarque e marque de novo quando ela sair.
+              frase dessa palavra ainda não tinha sido sorteada. Desmarque e marque de novo quando ela sair.
             </div>
           )}
           <button

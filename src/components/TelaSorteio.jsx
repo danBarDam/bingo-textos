@@ -1,5 +1,4 @@
 import Texto from "./Texto.jsx";
-import { PARES } from "../dados.js";
 import { parPorId } from "../utils.js";
 
 const numCartela = (n) => String(n).padStart(3, "0");
@@ -17,15 +16,16 @@ export default function TelaSorteio({ estado, ocupado, sortear, desempatar, pedi
         <div className="globo">
           <div key={sorteadas.length} className={"destaque " + (atual ? "gira" : "vazio")}>
             <div className="miolo">
-              {atual ? <Texto>{atual.sorteio}</Texto> : "Clique em Sortear para começar"}
+              {atual ? <Texto>{`${sorteadas.length}ª`}</Texto> : "Clique em Sortear para começar"}
             </div>
           </div>
+          {atual && <p className="frase-atual">{atual.sorteio}</p>}
           <div className="contador">
             {sorteadas.length} de {total} sorteadas · {jogadores} {jogadores === 1 ? "jogador" : "jogadores"}
           </div>
           <div className="acoes">
             <button className="btn primario" onClick={sortear} disabled={acabou || ocupado}>
-              {acabou ? "Todas sorteadas" : "Sortear palavra"}
+              {acabou ? "Todas sorteadas" : "Sortear frase"}
             </button>
             <button className={"btn" + (confirmando ? " confirmar" : "")} onClick={pedirNovaPartida} disabled={ocupado}>
               {confirmando ? "Confirmar nova partida" : "Nova partida"}
@@ -34,22 +34,17 @@ export default function TelaSorteio({ estado, ocupado, sortear, desempatar, pedi
         </div>
 
         <div className="painel">
-          <h2>PAINEL DO SORTEIO</h2>
-          <div className="grade-painel">
-            {PARES.map((p) => {
-              const ordem = sorteadas.indexOf(p.id);
-              return (
-                <div
-                  key={p.id}
-                  className={"cel-painel" + (ordem >= 0 ? " saiu" : "")}
-                  title={ordem >= 0 ? `${ordem + 1}ª sorteada` : "Ainda não saiu"}
-                >
-                  {ordem >= 0 && <span className="num">{ordem + 1}</span>}
-                  <Texto>{p.sorteio}</Texto>
-                </div>
-              );
-            })}
-          </div>
+          <h2>FRASES SORTEADAS</h2>
+          {sorteadas.length === 0 && <p className="esperando">Nenhuma ainda.</p>}
+          {/* Só o que já saiu, sem as respostas: a tela pode estar projetada para a turma */}
+          <ol className="lista-sorteadas">
+            {[...sorteadas].reverse().map((id, i) => (
+              <li key={id}>
+                <span className="num">{sorteadas.length - i}</span>
+                {parPorId(id).sorteio}
+              </li>
+            ))}
+          </ol>
         </div>
       </div>
     </>
@@ -78,7 +73,7 @@ function Vencedores({ estado, ocupado, desempatar }) {
           <div className="anuncio-rot">Empate!</div>
           <div className="anuncio-nome pequeno">{candidatos.map((p) => porPub[p]?.nome).join(" × ")}</div>
           <div className="anuncio-sub">
-            {desempate.length ? "Empataram de novo no desempate." : "Completaram na mesma palavra."} Cada um recebe um
+            {desempate.length ? "Empataram de novo no desempate." : "Completaram na mesma frase."} Cada um recebe um
             número de 1 a 10 e o maior vence.
           </div>
         </>
@@ -110,7 +105,7 @@ function Vencedores({ estado, ocupado, desempatar }) {
 
       {depois.length > 0 && (
         <div className="anuncio-depois">
-          Completaram depois: {depois.map((g) => `${g.nome} (${g.ganhouEm}ª palavra)`).join(", ")}
+          Completaram depois: {depois.map((g) => `${g.nome} (${g.ganhouEm}ª frase)`).join(", ")}
         </div>
       )}
     </section>

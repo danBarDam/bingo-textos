@@ -6,12 +6,12 @@ Jogo de bingo com palavras em React (Vite), para jogar em vários computadores a
 
 | Endereço | Quem usa | O que faz |
 |---|---|---|
-| `/` | Jogadores (aberto a todos) | Digita o nome → recebe uma cartela 4x4 e marca as palavras |
-| `/sorteio` | Quem conduz o jogo (pede senha) | Sorteia as palavras, vê quantos jogadores entraram e quem ganhou |
+| `/` | Jogadores (aberto a todos) | Digita o nome → recebe uma cartela 3x3 e marca as palavras |
+| `/sorteio` | Quem conduz o jogo (pede senha) | Sorteia as frases, vê quantos jogadores entraram e quem ganhou |
 
-- Ganha quem completar uma **linha, coluna ou diagonal** com palavras já sorteadas. O sistema detecta sozinho e o nome aparece na tela do sorteio.
-- Marcar uma palavra **antes** de ela ser sorteada não vale (fica vermelha). É preciso desmarcar e marcar de novo depois que ela sair.
-- Se mais de uma pessoa completar na **mesma palavra sorteada**, é empate: aparece o botão **Desempate**, que dá um número de 1 a 10 para cada empatado. O maior vence; se empatar de novo, repete só entre eles.
+- Ganha quem completar uma **linha, coluna ou diagonal** com palavras cujas frases já saíram. O sistema detecta sozinho e o nome aparece na tela do sorteio.
+- Marcar uma palavra **antes** de a frase dela ser sorteada não vale (fica vermelha). É preciso desmarcar e marcar de novo depois que ela sair.
+- Se mais de uma pessoa completar na **mesma frase sorteada**, é empate: aparece o botão **Desempate**, que dá um número de 1 a 10 para cada empatado. O maior vence; se empatar de novo, repete só entre eles.
 - **Nova partida** apaga os jogadores e os ganhadores. Quem estiver com a cartela aberta volta para a tela de nome (com o nome já preenchido) para pegar uma cartela nova.
 
 ## Rodar no computador
@@ -40,7 +40,7 @@ Divulgue `https://seu-projeto.vercel.app` para os jogadores e use `https://seu-p
 
 | Arquivo | O que tem |
 |---|---|
-| `src/dados.js` | Lista de pares de palavras (sorteio → cartela), tamanho da cartela, quantas sorteadas aparecem na faixa |
+| `src/dados.js` | Lista de pares frase → palavra (sorteio → cartela), tamanho da cartela, quantas sorteadas aparecem na faixa |
 | `src/AppSorteio.jsx` / `src/AppJogador.jsx` | Senha do sorteio / nome do jogador e comunicação com o servidor |
 | `src/components/TelaSorteio.jsx` | Tela do sorteio, anúncio do vencedor e desempate |
 | `src/components/TelaCartela.jsx` | Tela da cartela (faixa de sorteadas + grade + placar) |
@@ -48,12 +48,12 @@ Divulgue `https://seu-projeto.vercel.app` para os jogadores e use `https://seu-p
 | `api/` | Servidor: `estado`, `sorteio` (com senha), `jogador`; regras em `api/_lib/jogo.js` |
 | `src/styles.css` | Cores, fontes e layout |
 
-## Trocando as palavras
+## Trocando as frases e palavras
 
-Em `src/dados.js`, edite a lista. Cada linha é um par: a primeira palavra sai no sorteio, a segunda está na cartela.
+Em `src/dados.js`, edite a lista. Cada linha é um par: a frase sai no sorteio, a palavra está na cartela.
 
 ```js
-["Vaca", "Leite"],
+["Prato do Quênia feito com farinha de milho e água.", "Ugali"],
 ```
 
-São precisos pelo menos 16 pares (o tamanho da cartela). O tamanho da letra se ajusta sozinho, mas textos curtos ficam melhores.
+São precisos pelo menos 9 pares (o tamanho da cartela). Evite citar na frase a resposta ou outra palavra da lista.
